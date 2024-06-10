@@ -6,19 +6,30 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+
+@Entity
 public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private Date instante;
 	
-	private List<Produto> itens = new ArrayList<>();
-	
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")//CascadeType.ALL necessário para evitar erro de Entidade Transient
 	private Pagamento pagamento;
 	
 	private Cliente cliente;
 	
 	private Endereco enderecoDeEntrega;
+	
+	private List<Produto> itens = new ArrayList<>();
 	
 	public Pedido() {
 	}
