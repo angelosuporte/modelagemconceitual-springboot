@@ -2,6 +2,9 @@ package com.aprendendo.cursospring.domain;
 
 import com.aprendendo.cursospring.domain.enums.StatusPagamento;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class PagamentoComCartao extends Pagamento{
 	private static final long serialVersionUID = 1L;
 	

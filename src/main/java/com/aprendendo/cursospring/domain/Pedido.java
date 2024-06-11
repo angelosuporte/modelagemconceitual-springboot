@@ -1,9 +1,7 @@
 package com.aprendendo.cursospring.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
@@ -11,7 +9,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 public class Pedido implements Serializable {
@@ -20,25 +22,29 @@ public class Pedido implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date instante;
 	
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")//CascadeType.ALL necessário para evitar erro de Entidade Transient
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
 	private Pagamento pagamento;
 	
+	@ManyToOne
+	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 	
+	@ManyToOne
+	@JoinColumn(name="endereco_de_entrega_id")
 	private Endereco enderecoDeEntrega;
 	
-	private List<Produto> itens = new ArrayList<>();
 	
 	public Pedido() {
 	}
 
-	public Pedido(Integer id, Date instante, Pagamento pagamento, Cliente cliente, Endereco enderecoDeEntrega) {
+	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
 		super();
 		this.id = id;
 		this.instante = instante;
-		this.pagamento = pagamento;
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
@@ -57,14 +63,6 @@ public class Pedido implements Serializable {
 
 	public void setInstante(Date instante) {
 		this.instante = instante;
-	}
-
-	public List<Produto> getItens() {
-		return itens;
-	}
-
-	public void setItens(List<Produto> itens) {
-		this.itens = itens;
 	}
 
 	public Pagamento getPagamento() {

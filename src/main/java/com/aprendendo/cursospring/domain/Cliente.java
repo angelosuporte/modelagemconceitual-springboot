@@ -1,5 +1,6 @@
 package com.aprendendo.cursospring.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -7,8 +8,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.aprendendo.cursospring.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -18,8 +21,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class Cliente {
-
+public class Cliente implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
@@ -29,13 +33,15 @@ public class Cliente {
 	private Integer tipo;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy="cliente")
+	@OneToMany(mappedBy="cliente", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy="cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public Cliente() {
