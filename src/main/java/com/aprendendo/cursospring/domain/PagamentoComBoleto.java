@@ -6,8 +6,6 @@ import com.aprendendo.cursospring.domain.enums.StatusPagamento;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity
 public class PagamentoComBoleto extends Pagamento{
