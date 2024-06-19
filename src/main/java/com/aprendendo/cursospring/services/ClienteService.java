@@ -10,7 +10,7 @@ import com.aprendendo.cursospring.repositories.ClienteRepository;
 import com.aprendendo.cursospring.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class ClienteServico {
+public class ClienteService {
 
 	@Autowired
 	private ClienteRepository repo;
